@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_06qptdh" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.9.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
+  <bpmn:process id="qtrr_01" name="Quy trình phê duyệt tài liệu quản trị rủi ro" isExecutable="true" camunda:historyTimeToLive="P1D">
+    <bpmn:endEvent id="Event_18ileqy" name="Đề xuất đã hủy">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="status">cancel</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0m49ngq</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:startEvent id="StartEvent_1" name="Đề xuất cần phê duyệt">
+      <bpmn:outgoing>Flow_1vwiicm</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="Gateway_1whj5at">
+      <bpmn:incoming>Flow_023r1m0</bpmn:incoming>
+      <bpmn:outgoing>Flow_0m46aak</bpmn:outgoing>
+      <bpmn:outgoing>Flow_03b8q7y</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0txt5tl</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="completeTrack" name="Yêu cầu kết thúc phiên ký" camunda:type="external" camunda:topic="completeTrack">
+      <bpmn:incoming>Flow_1k6v33k</bpmn:incoming>
+      <bpmn:outgoing>Flow_023r1m0</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="createTrackId" name="Yêu cầu tạo phiên ký tài liệu (tracking id)" camunda:type="external" camunda:topic="createTrackId">
+      <bpmn:incoming>Flow_010bq4b</bpmn:incoming>
+      <bpmn:outgoing>Flow_1g9k3ra</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="mail03" name="Yêu cầu gửi mail03" camunda:type="external" camunda:topic="mail03">
+      <bpmn:incoming>Flow_0m46aak</bpmn:incoming>
+      <bpmn:outgoing>Flow_16tpzci</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="mail04" name="Yêu cầu gửi mail04" camunda:type="external" camunda:topic="mail04">
+      <bpmn:incoming>Flow_03b8q7y</bpmn:incoming>
+      <bpmn:outgoing>Flow_1i2iall</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="mail05" name="Yêu cầu gửi mail05" camunda:type="external" camunda:topic="mail05">
+      <bpmn:incoming>Flow_0txt5tl</bpmn:incoming>
+      <bpmn:outgoing>Flow_0sshx9t</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_1vgl0vn" name="Đề xuất đã hủy">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="status">cancel</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1i2iall</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="Event_0apcj2j" name="Đề xuất hoàn thành phê duyệt">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="status">completed</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0sshx9t</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="pd" name="Phê duyệt">
+      <bpmn:incoming>Flow_0tpsqi6</bpmn:incoming>
+      <bpmn:outgoing>Flow_1k6v33k</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_0ovusep">
+      <bpmn:incoming>Flow_1cs9q4d</bpmn:incoming>
+      <bpmn:incoming>Flow_01fg1le</bpmn:incoming>
+      <bpmn:outgoing>Flow_0m49ngq</bpmn:outgoing>
+      <bpmn:outgoing>Flow_010bq4b</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="mail01AndMail02" name="Yêu cầu gửi mail01 và mail 02" camunda:type="external" camunda:topic="mail01AndMail02">
+      <bpmn:incoming>Flow_1g9k3ra</bpmn:incoming>
+      <bpmn:outgoing>Flow_0tpsqi6</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="dxpd" name="Đề xuất phê duyệt">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="status">processing</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1vwiicm</bpmn:incoming>
+      <bpmn:outgoing>Flow_1cs9q4d</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="ycbs" name="Yêu cầu bổ sung">
+      <bpmn:incoming>Flow_16tpzci</bpmn:incoming>
+      <bpmn:outgoing>Flow_01fg1le</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0m49ngq" name="Hủy" sourceRef="Gateway_0ovusep" targetRef="Event_18ileqy">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${makerAction == 'cancel'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1vwiicm" sourceRef="StartEvent_1" targetRef="dxpd" />
+    <bpmn:sequenceFlow id="Flow_023r1m0" sourceRef="completeTrack" targetRef="Gateway_1whj5at" />
+    <bpmn:sequenceFlow id="Flow_0m46aak" name="ycbs" sourceRef="Gateway_1whj5at" targetRef="mail03">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${checkerAction == 'ycbs'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_03b8q7y" name="hủy" sourceRef="Gateway_1whj5at" targetRef="mail04">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${checkerAction == 'cancel'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0txt5tl" name="hoàn thanh" sourceRef="Gateway_1whj5at" targetRef="mail05">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${checkerAction == 'complete'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1k6v33k" sourceRef="pd" targetRef="completeTrack" />
+    <bpmn:sequenceFlow id="Flow_010bq4b" name="Hoàn thành" sourceRef="Gateway_0ovusep" targetRef="createTrackId">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${mackerAction == 'complete'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1g9k3ra" sourceRef="createTrackId" targetRef="mail01AndMail02" />
+    <bpmn:sequenceFlow id="Flow_16tpzci" sourceRef="mail03" targetRef="ycbs" />
+    <bpmn:sequenceFlow id="Flow_1i2iall" sourceRef="mail04" targetRef="Event_1vgl0vn" />
+    <bpmn:sequenceFlow id="Flow_0sshx9t" sourceRef="mail05" targetRef="Event_0apcj2j" />
+    <bpmn:sequenceFlow id="Flow_0tpsqi6" sourceRef="mail01AndMail02" targetRef="pd" />
+    <bpmn:sequenceFlow id="Flow_1cs9q4d" sourceRef="dxpd" targetRef="Gateway_0ovusep" />
+    <bpmn:sequenceFlow id="Flow_01fg1le" sourceRef="ycbs" targetRef="Gateway_0ovusep" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="qtrr_01">
+      <bpmndi:BPMNShape id="BPMNShape_14rdh43" bpmnElement="Event_18ileqy" bioc:stroke="#e53935" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#e53935">
+        <dc:Bounds x="612" y="422" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="593" y="398" width="74" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_15vvhfi" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="609" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="157" y="652" width="80" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0gbrjn9" bpmnElement="Gateway_1whj5at" isMarkerVisible="true">
+        <dc:Bounds x="1495" y="235" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1pvm7ue" bpmnElement="completeTrack" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1330" y="220" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0jusxhz" bpmnElement="createTrackId" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="710" y="220" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_11jqw1h" bpmnElement="mail03" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1670" y="110" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0smzle8" bpmnElement="mail04" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1670" y="220" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1skb5ib" bpmnElement="mail05" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1670" y="326" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1is7r4q" bpmnElement="Event_1vgl0vn" bioc:stroke="#e53935" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#e53935">
+        <dc:Bounds x="1992" y="242" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1973" y="285" width="74" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_01y7qav" bpmnElement="Event_0apcj2j" bioc:stroke="#43a047" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#43a047">
+        <dc:Bounds x="1992" y="348" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1971" y="391" width="79" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0vb0oaz" bpmnElement="pd" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
+        <dc:Bounds x="1190" y="786" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1ox8tph" bpmnElement="Gateway_0ovusep" isMarkerVisible="true">
+        <dc:Bounds x="605" y="491" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_01yjst0" bpmnElement="mail01AndMail02" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1030" y="220" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0tanqiq" bpmnElement="dxpd" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
+        <dc:Bounds x="440" y="587" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_09k9n35" bpmnElement="ycbs" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
+        <dc:Bounds x="440" y="476" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_1ox2qok" bpmnElement="Flow_0m49ngq" bioc:stroke="#e53935" color:border-color="#e53935">
+        <di:waypoint x="630" y="491" />
+        <di:waypoint x="630" y="458" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="649" y="469" width="21" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_0hecazb" bpmnElement="Flow_1vwiicm">
+        <di:waypoint x="215" y="627" />
+        <di:waypoint x="440" y="627" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_1hvpwri" bpmnElement="Flow_023r1m0">
+        <di:waypoint x="1430" y="260" />
+        <di:waypoint x="1495" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_0av9rwl" bpmnElement="Flow_0m46aak" bioc:stroke="#1e88e5" color:border-color="#1e88e5">
+        <di:waypoint x="1520" y="235" />
+        <di:waypoint x="1520" y="150" />
+        <di:waypoint x="1670" y="150" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1548" y="189" width="23" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_1s1qasf" bpmnElement="Flow_03b8q7y" bioc:stroke="#e53935" color:border-color="#e53935">
+        <di:waypoint x="1545" y="260" />
+        <di:waypoint x="1670" y="260" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1598" y="242" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_1ct6u3q" bpmnElement="Flow_0txt5tl" bioc:stroke="#43a047" color:border-color="#43a047">
+        <di:waypoint x="1520" y="285" />
+        <di:waypoint x="1520" y="366" />
+        <di:waypoint x="1670" y="366" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1572" y="329" width="56" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_0aljeh0" bpmnElement="Flow_1k6v33k">
+        <di:waypoint x="1290" y="826" />
+        <di:waypoint x="1380" y="826" />
+        <di:waypoint x="1380" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_07t2rzq" bpmnElement="Flow_010bq4b" bioc:stroke="#43a047" color:border-color="#43a047">
+        <di:waypoint x="655" y="516" />
+        <di:waypoint x="760" y="516" />
+        <di:waypoint x="760" y="300" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="781" y="389" width="57" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_09ik0c5" bpmnElement="Flow_1g9k3ra">
+        <di:waypoint x="810" y="260" />
+        <di:waypoint x="1030" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_1rgrbn0" bpmnElement="Flow_16tpzci" bioc:stroke="#fb8c00" color:border-color="#fb8c00">
+        <di:waypoint x="1720" y="110" />
+        <di:waypoint x="1720" y="86" />
+        <di:waypoint x="490" y="86" />
+        <di:waypoint x="490" y="476" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_0vj3ywd" bpmnElement="Flow_1i2iall">
+        <di:waypoint x="1770" y="260" />
+        <di:waypoint x="1992" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_0zei12s" bpmnElement="Flow_0sshx9t">
+        <di:waypoint x="1770" y="366" />
+        <di:waypoint x="1992" y="366" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_1mb2w28" bpmnElement="Flow_0tpsqi6">
+        <di:waypoint x="1130" y="260" />
+        <di:waypoint x="1160" y="260" />
+        <di:waypoint x="1160" y="826" />
+        <di:waypoint x="1190" y="826" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_1f8uguk" bpmnElement="Flow_1cs9q4d">
+        <di:waypoint x="540" y="627" />
+        <di:waypoint x="630" y="627" />
+        <di:waypoint x="630" y="541" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_15e7ijh" bpmnElement="Flow_01fg1le">
+        <di:waypoint x="540" y="516" />
+        <di:waypoint x="605" y="516" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

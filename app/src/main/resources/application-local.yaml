@@ -1,0 +1,28 @@
+#BPM GATE
+BPM_GATE_URI: https://openapi-sit.vpbanks.com.vn/bpm-gate
+
+#ECM
+ECM_GATE_URI: https://openapi-sit.vpbanks.com.vn/ecm-gate
+ECM_GATE_VIEW_FILE_URI: https://dms-sit.vpbanks.com.vn/navigator/bookmark.jsp?desktop=ecm01&repositoryId=ob01&repositoryType=p8&docid=%s
+ECM_GATE_BASE_FOLDER: /BPM/005_QTRR_01
+
+#ESIGN
+ESIGN_GATE_URI: https://openapi-sit.vpbanks.com.vn/esignature
+
+#GEN DOC
+DOC_GEN_GATE_URI: https://openapi-sit.vpbanks.com.vn/bpm-doc-gen
+
+#Camunda
+BPM_CORE_SERVICE: https://openapi-sit.vpbanks.com.vn/bpm-core/engine-rest
+
+# database
+DATA_SOURCE_URL: jdbc:postgresql://10.20.2.2:5432/bpm_biz?reWriteBatchedInserts=true&currentSchema=bpm_qtrr_01
+DATA_SOURCE_USERNAME: bpmbiz_owner
+DATA_SOURCE_PASSWORD: BpmoWner@123
+SCHEMA: bpm_qtrr_01
+
+
+#Notifi
+REMIND_CODE: remindCode
+BPM_KAFKA_BOOTSTRAP_SERVERS: 10.20.0.11:9092
+BPM_KAFKA_TOPIC_NOTIFICATION_REQUEST: notification.receive.topic

@@ -1,0 +1,6 @@
+services:
+  ecmGate:
+    uri: ${ECM_GATE_URI:https://openapi-sit.vpbanks.com.vn/ecm-gate}
+    viewFileUri: ${ECM_GATE_VIEW_FILE_URI:https://dms-sit.vpbanks.com.vn/navigator/bookmark.jsp?desktop=ecm01&repositoryId=ob01&repositoryType=p8&docid=%s}
+    baseFolder: ${ECM_GATE_BASE_FOLDER:/BPM/005_QTRR_01}
+    ecmClassName: ${ECM_CLASS_NAME:QTRR_01}

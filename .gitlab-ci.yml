@@ -1,0 +1,90 @@
+include:
+  - project: devops/ci-template
+    file: deploy-service.yml
+    ref: master
+
+variables:
+  VALUES_FOLDER: $CI_PROJECT_DIR/k8s/
+  SERVICE_BPM_QTRR_01_APP: bpm-qtrr-01
+
+
+stages:
+  # - sonarqube-check
+  - compile_build
+  - docker_build
+  - send_request_devops_deploy
+  - retag image
+
+# # ---------------------------- Code Scan ----------------------------
+# sonarqube-check:
+#   tags: [ maven-jdk11 ]
+#   stage: sonarqube-check
+#   variables:
+#     SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
+#     GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
+#   cache:
+#     key: "${CI_JOB_NAME}"
+#     paths:
+#       - .sonar/cache
+#   script: 
+#     - mvn verify sonar:sonar -Dsonar.projectKey=backend_base-service_base-notification_AY5fp2hUC9j6X7f1AIXk -Dsonar.projectName='base-notification'
+#   allow_failure: true
+#   rules:
+#     - if: $CI_COMMIT_BRANCH == 'sit'
+# # -----------------------------End of Code Scan ------------------------------
+# ---------------------------- Start Build Jar File ----------------------------
+
+compile build:
+  image: registry.fke.fptcloud.com/31f392ec-105b-44e9-b3b5-abe1dd07e37e/docker-maven-jdk:17
+  tags: [ maven-jdk11 ]
+  stage: compile_build
+  script:
+    - 'mvn --batch-mode -U clean package spring-boot:repackage -DskipTests'
+    - 'mkdir build'
+    - 'cp app/target/*.jar build/app.jar'
+  only:
+    refs:
+      - master
+      - staging
+      - uat
+      - sit
+  except:
+    - pipelines
+  artifacts:
+    expire_in: 1h
+    paths:
+      - build/app.jar
+# ---------------------------- End Build Jar File ----------------------------
+
+# ---------------------------- Start Build Docker Image ----------------------------
+bpm-qtrr-01 docker build:
+  extends: .docker_build
+  # when: manual
+  variables:
+    DOCKER_FILE: Dockerfile
+    SERVICE_NAME: $SERVICE_BPM_QTRR_01_APP
+
+# ---------------------------- End Build Docker Image -------------------------------------
+# ---------------------------- Start Deploy non prod----------------------------
+bpm-qtrr-01 non-prod deploy:
+  stage: retag image
+  extends: .retag_service_non_prod
+  # when: manual
+  variables:
+    APP_NAME: $SERVICE_BPM_QTRR_01_APP
+    SCRIPT: ${SERVICE_BPM_QTRR_01_APP}.sh
+
+# ---------------------------- End Deploy ----------------------------
+# ---------------------------- Start Deploy prod----------------------------
+send_request_devops_deploy_prod:
+  stage: send_request_devops_deploy
+  extends: .devops_confirm_request_deploy_prod
+
+request deploy bpm-qtrr-01 prod:
+  stage: retag image
+  extends: .retag_service_prod
+  variables:
+    APP_NAME: ${SERVICE_BPM_QTRR_01_APP}
+    SCRIPT: ${SERVICE_BPM_QTRR_01_APP}.sh
+
+# ---------------------------- End Deploy ----------------------------

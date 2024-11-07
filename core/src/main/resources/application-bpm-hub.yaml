@@ -1,0 +1,3 @@
+services:
+  bpmHub:
+    uri: ${BPM_HUB_URI:https://openapi-sit.vpbanks.com.vn/bpm-integration-hub}

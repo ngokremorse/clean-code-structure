@@ -1,0 +1,3 @@
+services:
+  gendocGate:
+    uri: ${DOC_GEN_GATE_URI:https://openapi-sit.vpbanks.com.vn/bpm-doc-gen}

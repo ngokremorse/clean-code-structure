@@ -1,0 +1,22 @@
+server:
+  port: 9394
+  servlet:
+    context-path: /bpm-qtrr-01
+    max-http-request-header-size: ${HTTP_HEADER_MAX_SIZE:128KB}
+spring:
+  application:
+    name: bpm-qtrr-01
+  cloud:
+    openfeign:
+      lazy-attributes-resolution: true
+  profiles:
+    include: common-deploy, postgres, ecm-gate, bpm-gate, gendoc-gate, esign-gate, bpm-hub, email, bpm-camunda
+    active: ${ACTIVE_PROFILE:local}
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 600000
+        readTimeout: 600000
+        loggerLevel: basic

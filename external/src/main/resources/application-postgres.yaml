@@ -1,0 +1,33 @@
+spring:
+  liquibase:
+    change-log: classpath:db/changelog/master.xml
+    enabled: true
+  jpa:
+    database: POSTGRESQL
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
+        default_schema: ${SCHEMA:bpm_qtrr_01}
+  datasource:
+    url: ${DATA_SOURCE_URL:jdbc:postgresql://localhost:5432/bpm_biz}
+    username: ${DATA_SOURCE_USERNAME:postgres}
+    password: ${DATA_SOURCE_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      max-lifetime: ${DATA_SOURCE_HIKARI_MAX_LIFE_TIME:120000}
+  hikari:
+    jdbc-url: ${DATA_SOURCE_URL:jdbc:postgresql://localhost:5432/bpm_biz}
+    username: ${DATA_SOURCE_USERNAME:postgres}
+    password: ${DATA_SOURCE_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+    pool-name: BPM-BOND-HIKARI-POOL
+    idle-timeout: 3000
+    minimum-idle: 30
+    maximum-pool-size: 10
+    connection-timeout: 2000
+    connection-test-query: select 1
+    transaction-isolation: TRANSACTION_READ_COMMITTED

@@ -1,0 +1,21 @@
+#BPM GATE
+BPM_GATE_URI: http://bpm-gate/bpm-gate
+
+#ECM
+ECM_GATE_URI: http://ecm-gate/ecm-gate
+ECM_GATE_VIEW_FILE_URI: https://dms-uat.vpbanks.com.vn/navigator/bookmark.jsp?desktop=ecm01&repositoryId=ob01&repositoryType=p8&docid=%s
+ECM_GATE_BASE_FOLDER: /BPM/005_QTRR_01
+
+#ESIGN
+ESIGN_GATE_URI: http://esignature-application/esignature
+
+#GEN DOC
+DOC_GEN_GATE_URI: http://bpm-doc-gen/bpm-doc-gen
+
+#CAMUNDA
+BPM_CORE_SERVICE: http://bpm-core/bpm-core/engine-rest
+
+# database
+DATA_SOURCE_URL: jdbc:postgresql://10.20.1.51:5432/bpm_biz?reWriteBatchedInserts=true&currentSchema=bpm_qtrr_01
+DATA_SOURCE_USERNAME: bpmbiz_owner
+DATA_SOURCE_PASSWORD: BpmoWner@123

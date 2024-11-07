@@ -1,0 +1,4 @@
+email:
+  source: ${MAIL_SOURCE:BPM}
+  app-code: ${MAIL_APP_CODE:NIA}
+  remind-code: ${REMIND_CODE:remindCode}

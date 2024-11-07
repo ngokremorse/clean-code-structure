@@ -1,0 +1,3 @@
+services:
+  esignGate:
+    uri: ${ESIGN_GATE_URI:https://openapi-sit.vpbanks.com.vn/esignature}

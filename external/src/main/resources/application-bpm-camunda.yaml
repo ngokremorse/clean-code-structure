@@ -1,0 +1,8 @@
+camunda:
+  bpm:
+    client:
+      base-url: ${BPM_CORE_SERVICE:https://openapi-sit.vpbanks.com.vn/bpm-core/engine-rest}
+      lock-duration: 90000 #1p30s
+    enabled: false
+    database:
+      schema-update: false
